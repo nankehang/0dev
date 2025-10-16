@@ -29,7 +29,7 @@ export default function ContactForm() {
 
         <div className="flex items-center gap-4">
           <button type="submit" className="btn btn-primary">Send Offer</button>
-          <a className="text-sm text-gray-400" href="mailto:contact@0dev.io">Or email: contact@0dev.io</a>
+          <a className="text-sm text-gray-400" href="mailto:khusanakihang@gmail.com">Or email: khusanakihang@gmail.com</a>
         </div>
 
         {status === 'sending' && <p className="text-sm text-gray-400 mt-3">Sending...</p>}

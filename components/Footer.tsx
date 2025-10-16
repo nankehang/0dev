@@ -15,7 +15,7 @@ export default function Footer() {
     ],
     company: [
       { label: 'Acquire Domain', href: '#cta' },
-      { label: 'Contact', href: 'mailto:contact@0dev.io' },
+      { label: 'Contact', href: 'mailto:khusanakihang@gmail.com' },
       { label: 'Privacy Policy', href: '#' },
     ],
   };
@@ -37,10 +37,10 @@ export default function Footer() {
             <div className="flex items-center space-x-2 text-sm text-gray-500">
               <span>📧</span>
               <a
-                href="mailto:contact@0dev.io"
+                href="mailto:khusanakihang@gmail.com"
                 className="hover:text-primary-500 transition-colors"
               >
-                contact@0dev.io
+                khusanakihang@gmail.com
               </a>
             </div>
           </div>

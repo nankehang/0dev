@@ -8,7 +8,7 @@ import ContactForm from './ContactForm';
 export default function CTA() {
   const handleEmailClick = () => {
     trackEmailClick();
-    window.location.href = 'mailto:contact@0dev.io?subject=Inquiry about 0dev.io Domain Purchase';
+    window.location.href = 'mailto:khusanakihang@gmail.com?subject=Inquiry about 0dev.io Domain Purchase';
   };
 
   return (

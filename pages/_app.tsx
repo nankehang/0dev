@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     console.log('%c🚀 0dev.io', 'font-size: 24px; font-weight: bold; color: #6366f1;');
     console.log('%cInterested in acquiring this premium domain?', 'font-size: 14px; color: #a1a1aa;');
-    console.log('%cContact us at: contact@0dev.io', 'font-size: 14px; color: #10b981;');
+    console.log('%cContact us at: khusanakihang@gmail.com', 'font-size: 14px; color: #10b981;');
     console.log('%c\nShort, memorable, and perfect for tech startups! 💎', 'font-size: 12px; color: #8b5cf6;');
   }, []);
   

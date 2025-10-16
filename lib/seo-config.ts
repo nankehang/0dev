@@ -25,7 +25,7 @@ export const siteConfig = {
     'memorable domain',
   ],
   links: {
-    contact: 'mailto:contact@0dev.io',
+    contact: 'mailto:khusanakihang@gmail.com',
   },
 };
 
@@ -57,7 +57,7 @@ export const organizationStructuredData = {
   sameAs: [],
   contactPoint: {
     '@type': 'ContactPoint',
-    email: 'contact@0dev.io',
+    email: 'khusanakihang@gmail.com',
     contactType: 'Sales',
   },
 };
