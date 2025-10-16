@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import * as gtag from '@/lib/gtag';
+import { DefaultSeo } from 'next-seo';
+import SEO from '@/lib/next-seo.config';
 
 /**
  * Custom App Component
@@ -32,5 +34,11 @@ export default function App({ Component, pageProps }: AppProps) {
     console.log('%c\nShort, memorable, and perfect for tech startups! 💎', 'font-size: 12px; color: #8b5cf6;');
   }, []);
   
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <DefaultSeo {...SEO} />
+      <Component {...pageProps} />
+    </>
+  );
 }
+

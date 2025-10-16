@@ -1,4 +1,5 @@
 import { trackCTAClick, trackEmailClick } from '@/lib/gtag';
+import ContactForm from './ContactForm';
 
 /**
  * CTA Component
@@ -11,6 +12,7 @@ export default function CTA() {
   };
 
   return (
+    <>
     <section id="cta" className="section relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary-600/20 to-purple-600/20"></div>
@@ -67,8 +69,8 @@ export default function CTA() {
             </p>
           </div>
 
-          {/* Additional Info */}
-          <div className="mt-12 grid md:grid-cols-3 gap-6">
+            {/* Additional Info */}
+            <div className="mt-12 grid md:grid-cols-3 gap-6">
             <div className="card">
               <div className="text-3xl mb-3">💎</div>
               <h4 className="font-semibold mb-2">Premium Value</h4>
@@ -94,5 +96,13 @@ export default function CTA() {
         </div>
       </div>
     </section>
+    
+    {/* Contact Form Section (Make an Offer) */}
+    <section className="section bg-dark-900">
+      <div className="container">
+        <ContactForm />
+      </div>
+    </section>
+    </>
   );
 }

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://0dev.io/sitemap.xml
+
+# Visit https://developers.google.com/search/docs/advanced/robots/intro for more info
