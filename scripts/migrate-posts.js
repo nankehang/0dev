@@ -1,7 +1,8 @@
-import mongoose from 'mongoose';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+require('dotenv').config({ path: '.env.local' });
+const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
+const matter = require('gray-matter');
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -37,7 +38,7 @@ const PostSchema = new mongoose.Schema({
   }],
 });
 
-const Post = mongoose.models.Post || mongoose.model('Post', PostSchema);
+const Post = mongoose.models?.Post || mongoose.model('Post', PostSchema);
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
