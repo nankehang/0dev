@@ -55,35 +55,3 @@ export default async function handler(
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-
-    try {
-      const { title, content, tags } = req.body;
-      const slug = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
-
-      const frontmatter = {
-        title,
-        date: new Date().toISOString(),
-        tags: tags || [],
-        excerpt: content.substring(0, 150) + '...',
-      };
-
-      const fileContent = matter.stringify(content, frontmatter);
-      const filePath = path.join(postsDirectory, `${slug}.md`);
-
-      if (!fs.existsSync(postsDirectory)) {
-        fs.mkdirSync(postsDirectory, { recursive: true });
-      }
-
-      fs.writeFileSync(filePath, fileContent);
-
-      res.status(201).json({ slug, message: 'Post created successfully' });
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to create post' });
-    }
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
-  }
-}

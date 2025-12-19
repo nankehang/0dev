@@ -70,29 +70,3 @@ export default async function handler(
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-        excerpt: content.substring(0, 150) + '...',
-      };
-
-      const fileContent = matter.stringify(content, frontmatter);
-      fs.writeFileSync(filePath, fileContent);
-
-      res.status(200).json({ message: 'Post updated successfully' });
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to update post' });
-    }
-  } else if (req.method === 'DELETE') {
-    // Protected: Delete post
-    if (!session) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    try {
-      fs.unlinkSync(filePath);
-      res.status(200).json({ message: 'Post deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to delete post' });
-    }
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
-  }
-}
