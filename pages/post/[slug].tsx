@@ -6,7 +6,6 @@ import { FaClock, FaTag, FaArrowLeft, FaEdit, FaTrash, FaSave, FaTimes } from 'r
 import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import { useSession } from 'next-auth/react';
-import PostSEO from '@/components/PostSEO';
 import SocialShare from '@/components/SocialShare';
 
 interface Post {
@@ -150,13 +149,26 @@ export default function PostPage() {
 
   return (
     <>
-      <PostSEO
-        title={post.title}
-        description={post.content?.substring(0, 160) || post.title}
-        tags={post.tags || []}
-        publishedTime={post.date}
-        image="/og-image.png"
-      />
+      <Head>
+        <title>{post.title} - 0dev.io</title>
+        <meta name="description" content={post.content?.substring(0, 160) || post.title} />
+        <meta property="og:title" content={`${post.title} - 0dev.io`} />
+        <meta property="og:description" content={post.content?.substring(0, 160) || post.title} />
+        <meta property="og:image" content="https://www.0dev.io/og-image.png" />
+        <meta property="og:url" content={`https://www.0dev.io/post/${post.slug}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="0dev.io" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${post.title} - 0dev.io`} />
+        <meta name="twitter:description" content={post.content?.substring(0, 160) || post.title} />
+        <meta name="twitter:image" content="https://www.0dev.io/og-image.png" />
+        {post.tags && post.tags.map((tag) => (
+          <meta key={tag} property="article:tag" content={tag} />
+        ))}
+        {post.date && (
+          <meta property="article:published_time" content={new Date(post.date).toISOString()} />
+        )}
+      </Head>
 
       <div className="min-h-screen bg-hacker-black py-24 px-4 sm:px-6 lg:px-8">
         <article className="max-w-4xl mx-auto">
