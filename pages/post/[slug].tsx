@@ -6,6 +6,8 @@ import { FaClock, FaTag, FaArrowLeft, FaEdit, FaTrash, FaSave, FaTimes } from 'r
 import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import { useSession } from 'next-auth/react';
+import PostSEO from '@/components/PostSEO';
+import SocialShare from '@/components/SocialShare';
 
 interface Post {
   slug: string;
@@ -148,10 +150,13 @@ export default function PostPage() {
 
   return (
     <>
-      <Head>
-        <title>{post.title} - 0dev.io</title>
-        <meta name="description" content={post.content?.substring(0, 160) || post.title} />
-      </Head>
+      <PostSEO
+        title={post.title}
+        description={post.content?.substring(0, 160) || post.title}
+        tags={post.tags || []}
+        publishedTime={post.date}
+        image="/og-image.png"
+      />
 
       <div className="min-h-screen bg-hacker-black py-24 px-4 sm:px-6 lg:px-8">
         <article className="max-w-4xl mx-auto">
@@ -240,6 +245,13 @@ export default function PostPage() {
               </div>
             )}
           </div>
+
+          {/* Social Share */}
+          <SocialShare
+            url={`${typeof window !== 'undefined' ? window.location.origin : 'https://0dev.io'}/post/${post.slug}`}
+            title={post.title}
+            description={post.content?.substring(0, 160) || post.title}
+          />
 
           {/* Content */}
           {editing ? (
