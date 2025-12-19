@@ -58,69 +58,73 @@ const NoteEditor: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-hacker-black py-24 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8 flex justify-between items-center">
-          <h1 className="text-3xl font-mono font-bold text-hacker-red animate-flicker">
-            {'>'} NEW_RESEARCH_NOTE
-          </h1>
+        <div className="mb-12 flex justify-between items-center">
+          <div>
+            <h1 className="gradient-text text-4xl font-bold mb-2">
+              Create New Research Note
+            </h1>
+            <p className="text-hacker-lightgray">Document your findings and insights</p>
+          </div>
           <button
             onClick={() => router.back()}
-            className="text-matrix-green hover:text-hacker-red transition-colors font-mono flex items-center space-x-2"
+            className="btn btn-secondary"
           >
-            <FaTimes />
-            <span>[CANCEL]</span>
+            <FaTimes className="w-4 h-4 mr-2" />
+            Cancel
           </button>
         </div>
 
         {/* Title Input */}
-        <div className="mb-6">
-          <label className="block text-matrix-green font-mono mb-2">
-            {'>'} TITLE:
+        <div className="mb-8">
+          <label className="block text-hacker-white font-semibold mb-3 text-lg">
+            Note Title
           </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter note title..."
-            className="w-full bg-hacker-darkgray border-2 border-hacker-red text-matrix-green px-4 py-3 rounded font-mono focus:outline-none focus:border-hacker-red focus:ring-2 focus:ring-hacker-red/50"
+            placeholder="Enter a descriptive title for your research note..."
+            className="input-modern w-full text-lg py-4"
           />
         </div>
 
         {/* Tags */}
-        <div className="mb-6">
-          <label className="block text-matrix-green font-mono mb-2">
-            {'>'} TAGS:
+        <div className="mb-8">
+          <label className="block text-hacker-white font-semibold mb-3 text-lg">
+            Topics & Tags
           </label>
-          <div className="flex gap-2 mb-2">
+          <div className="flex gap-3 mb-4">
             <input
               type="text"
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
-              placeholder="Add tag and press Enter..."
-              className="flex-1 bg-hacker-darkgray border-2 border-hacker-red text-matrix-green px-4 py-2 rounded font-mono focus:outline-none focus:border-hacker-red focus:ring-2 focus:ring-hacker-red/50"
+              placeholder="Add a topic and press Enter..."
+              className="input-modern flex-1"
             />
             <button
               onClick={handleAddTag}
-              className="bg-hacker-red text-black px-4 py-2 rounded font-mono hover:bg-hacker-darkred transition-colors"
+              className="btn btn-primary px-6"
             >
-              [ADD]
+              <FaTag className="w-4 h-4 mr-2" />
+              Add Tag
             </button>
           </div>
           {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="flex items-center space-x-2 bg-hacker-darkgray border border-hacker-red text-matrix-green px-3 py-1 rounded font-mono"
+                  className="inline-flex items-center gap-2 bg-accent-purple/20 text-accent-purple px-4 py-2 rounded-full font-medium"
                 >
-                  <FaTag className="text-hacker-red" />
-                  <span>#{tag}</span>
+                  <FaTag className="w-3 h-3" />
+                  #{tag}
                   <button
                     onClick={() => handleRemoveTag(tag)}
-                    className="text-hacker-red hover:text-matrix-green ml-1"
+                    className="hover:text-hacker-red transition-colors ml-1"
                   >
                     ×
                   </button>
@@ -131,37 +135,64 @@ const NoteEditor: React.FC = () => {
         </div>
 
         {/* Content Editor */}
-        <div className="mb-6">
-          <label className="block text-matrix-green font-mono mb-2">
-            {'>'} CONTENT:
+        <div className="mb-8">
+          <label className="block text-hacker-white font-semibold mb-3 text-lg">
+            Research Content
           </label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your research notes in Markdown format..."
-            rows={20}
-            className="w-full bg-hacker-darkgray border-2 border-hacker-red text-matrix-green px-4 py-3 rounded font-mono focus:outline-none focus:border-hacker-red focus:ring-2 focus:ring-hacker-red/50 resize-y"
+            placeholder="Write your research notes in Markdown format...
+
+# Headings
+## Subheadings
+
+**Bold text** and *italic text*
+
+- Bullet points
+- More items
+
+`inline code`
+
+```
+Code blocks
+```
+
+> Blockquotes
+
+[Links](https://example.com)"
+            rows={25}
+            className="input-modern w-full text-base leading-relaxed resize-y"
           />
-          <p className="text-xs text-hacker-lightgray font-mono mt-2">
-            // Markdown supported: **bold**, *italic*, `code`, ```code blocks```, # headings, - lists
-          </p>
+          <div className="mt-3 text-sm text-hacker-lightgray">
+            <p className="font-medium mb-2">Markdown formatting supported:</p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <span><code className="bg-hacker-gray/50 px-1 rounded">**bold**</code> → <strong>bold</strong></span>
+              <span><code className="bg-hacker-gray/50 px-1 rounded">*italic*</code> → <em>italic</em></span>
+              <span><code className="bg-hacker-gray/50 px-1 rounded">`code`</code> → <code className="bg-hacker-gray/50 px-1 rounded">code</code></span>
+              <span><code className="bg-hacker-gray/50 px-1 rounded"># Heading</code> → Heading</span>
+              <span><code className="bg-hacker-gray/50 px-1 rounded">- List</code> → • List</span>
+              <span><code className="bg-hacker-gray/50 px-1 rounded">[Link](url)</code> → Link</span>
+            </div>
+          </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-end gap-4 pt-6 border-t border-hacker-gray/30">
           <button
             onClick={() => router.back()}
-            className="bg-hacker-darkgray text-matrix-green border-2 border-hacker-red px-6 py-3 rounded font-mono hover:bg-hacker-gray transition-colors"
+            className="btn btn-secondary"
+            disabled={saving}
           >
-            [CANCEL]
+            Cancel
           </button>
           <button
             onClick={handleSave}
-            disabled={saving}
-            className="bg-hacker-red text-black px-6 py-3 rounded font-mono hover:bg-hacker-darkred transition-colors flex items-center space-x-2 disabled:opacity-50"
+            disabled={saving || !title.trim() || !content.trim()}
+            className="btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
           >
-            <FaSave />
-            <span>{saving ? '[SAVING...]' : '[SAVE_NOTE]'}</span>
+            <FaSave className="w-5 h-5" />
+            <span>{saving ? 'Saving...' : 'Save Research Note'}</span>
           </button>
         </div>
       </div>

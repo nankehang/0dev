@@ -61,60 +61,57 @@ const BlogList: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-hacker-black">
-        <div className="text-hacker-red font-mono text-xl animate-pulse">
-          <span className="animate-flicker">{'>'} LOADING_NOTES...</span>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="loading w-16 h-16 rounded-full mx-auto mb-4"></div>
+          <p className="text-hacker-lightgray font-medium">Loading research notes...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-hacker-black py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen py-24 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-mono font-bold text-hacker-red mb-4 animate-flicker">
-            {'>'} RESEARCH_NOTES
+        <div className="mb-16 text-center">
+          <h1 className="gradient-text text-5xl md:text-6xl font-bold mb-6 animate-flicker">
+            RESEARCH NOTES
           </h1>
-          <p className="text-matrix-green font-mono">
-            // Personal knowledge base and research documentation
+          <p className="text-xl text-hacker-lightgray max-w-2xl mx-auto leading-relaxed">
+            Personal knowledge base and research documentation for modern development
           </p>
         </div>
 
         {/* Search and Filter */}
-        <div className="mb-8 space-y-4">
-          <div className="relative">
-            <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-hacker-red" />
+        <div className="mb-12 space-y-6">
+          <div className="relative max-w-md mx-auto">
+            <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-matrix-green" />
             <input
               type="text"
               placeholder="Search notes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-hacker-darkgray border-2 border-hacker-red text-matrix-green pl-12 pr-4 py-3 rounded font-mono focus:outline-none focus:border-hacker-red focus:ring-2 focus:ring-hacker-red/50"
+              className="input-modern w-full pl-12 pr-4 py-4 text-lg"
             />
           </div>
 
           {allTags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-center gap-3">
               <button
                 onClick={() => setSelectedTag('')}
-                className={`px-3 py-1 rounded font-mono text-sm transition-colors ${
-                  selectedTag === ''
-                    ? 'bg-hacker-red text-black'
-                    : 'bg-hacker-darkgray text-matrix-green border border-hacker-red hover:bg-hacker-red hover:text-black'
+                className={`btn btn-ghost text-sm px-4 py-2 ${
+                  selectedTag === '' ? 'bg-matrix-green/20 text-matrix-green' : ''
                 }`}
               >
-                [ALL]
+                All Topics
               </button>
               {allTags.map((tag) => (
                 <button
                   key={tag}
                   onClick={() => setSelectedTag(tag)}
-                  className={`px-3 py-1 rounded font-mono text-sm transition-colors ${
-                    selectedTag === tag
-                      ? 'bg-hacker-red text-black'
-                      : 'bg-hacker-darkgray text-matrix-green border border-hacker-red hover:bg-hacker-red hover:text-black'
+                  className={`btn btn-ghost text-sm px-4 py-2 ${
+                    selectedTag === tag ? 'bg-matrix-green/20 text-matrix-green' : ''
                   }`}
                 >
                   #{tag}
@@ -127,64 +124,76 @@ const BlogList: React.FC = () => {
         {/* Posts Grid */}
         {filteredPosts.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-matrix-green font-mono text-xl">
-              {'>'} NO_NOTES_FOUND
-            </p>
-            <p className="text-hacker-lightgray font-mono text-sm mt-2">
-              // Try different search terms or create a new note
+            <div className="text-6xl mb-4">📝</div>
+            <h3 className="text-2xl font-bold text-hacker-white mb-2">No notes found</h3>
+            <p className="text-hacker-lightgray">
+              Try different search terms or create a new research note
             </p>
           </div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredPosts.map((post) => (
               <Link
                 key={post.slug}
                 href={`/post/${post.slug}`}
                 className="group"
               >
-                <article className="bg-hacker-darkgray border-2 border-hacker-red p-6 rounded hover:border-matrix-green transition-all hover:shadow-lg hover:shadow-hacker-red/20">
-                  <h2 className="text-xl font-mono font-bold text-hacker-red group-hover:text-matrix-green transition-colors mb-3">
-                    {'>'} {post.title}
-                  </h2>
+                <article className="card group-hover:scale-105 transition-transform duration-300">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h2 className="text-xl font-bold text-hacker-white group-hover:text-matrix-green transition-colors mb-2 leading-tight">
+                        {post.title}
+                      </h2>
+                      <p className="text-hacker-lightgray text-sm line-clamp-3 leading-relaxed">
+                        {post.excerpt || 'No preview available'}
+                      </p>
+                    </div>
+                  </div>
 
-                  <div className="flex items-center space-x-4 text-xs text-hacker-lightgray font-mono mb-3">
-                    <span className="flex items-center space-x-1">
-                      <FaClock className="text-matrix-green" />
+                  <div className="flex items-center justify-between text-sm text-hacker-lightgray mb-4">
+                    <span className="flex items-center space-x-2">
+                      <FaClock className="text-matrix-green w-4 h-4" />
                       <span>
                         {(() => {
                           try {
                             const date = new Date(post.date);
-                            return isNaN(date.getTime()) ? 'Invalid date' : format(date, 'MMM dd, yyyy');
+                            return isNaN(date.getTime()) ? 'Recent' : format(date, 'MMM dd, yyyy');
                           } catch {
-                            return 'Invalid date';
+                            return 'Recent';
                           }
                         })()}
                       </span>
                     </span>
+                    {post.tags && post.tags.length > 0 && (
+                      <span className="text-xs bg-matrix-green/20 text-matrix-green px-2 py-1 rounded-full">
+                        {post.tags.length} topic{post.tags.length !== 1 ? 's' : ''}
+                      </span>
+                    )}
                   </div>
 
-                  <p className="text-sm text-matrix-green font-mono mb-4 line-clamp-3">
-                    {post.excerpt || 'No excerpt available'}
-                  </p>
-
                   {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="flex items-center space-x-1 text-xs bg-hacker-black border border-hacker-red text-hacker-red px-2 py-1 rounded font-mono"
+                          className="text-xs bg-accent-purple/20 text-accent-purple px-3 py-1 rounded-full font-medium"
                         >
-                          <FaTag />
-                          <span>{tag}</span>
+                          #{tag}
                         </span>
                       ))}
+                      {post.tags.length > 3 && (
+                        <span className="text-xs text-hacker-lightgray px-2 py-1">
+                          +{post.tags.length - 3} more
+                        </span>
+                      )}
                     </div>
                   )}
 
-                  <div className="mt-4 pt-4 border-t border-hacker-red/30">
-                    <span className="text-matrix-green font-mono text-sm group-hover:text-hacker-red transition-colors">
-                      [READ_MORE] →
+                  <div className="flex items-center justify-between">
+                    <span className="text-matrix-green font-medium text-sm group-hover:text-accent-purple transition-colors">
+                      Read more →
                     </span>
+                    <div className="w-2 h-2 bg-matrix-green rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </div>
                 </article>
               </Link>

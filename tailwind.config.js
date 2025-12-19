@@ -9,15 +9,21 @@ module.exports = {
     extend: {
       colors: {
         hacker: {
-          red: '#FF0000',
-          darkred: '#CC0000',
-          black: '#0A0A0A',
-          darkgray: '#1A1A1A',
-          gray: '#2A2A2A',
-          lightgray: '#3A3A3A',
+          red: '#EF4444',      // Modern red
+          darkred: '#DC2626',  // Darker red
+          black: '#0F172A',    // Modern dark blue-black
+          darkgray: '#1E293B', // Modern dark gray
+          gray: '#334155',    // Medium gray
+          lightgray: '#64748B', // Light gray
+          white: '#F8FAFC',   // Off-white
         },
         matrix: {
-          green: '#00FF41',
+          green: '#10B981',   // Modern emerald green
+          light: '#34D399',   // Light green
+        },
+        accent: {
+          purple: '#8B5CF6',  // Modern purple accent
+          blue: '#3B82F6',    // Modern blue accent
         },
       },
       fontFamily: {
