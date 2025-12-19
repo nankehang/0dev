@@ -17,8 +17,14 @@ export default async function handler(
     return res.status(400).json({ error: 'Title parameter is required' });
   }
 
-  // Handle tags parameter (can be string or string array)
-  const tagsString = Array.isArray(tags) ? tags.join(',') : (tags || '');
+  // Sanitize input to prevent SSTI attacks
+  const sanitizedTitle = title.replace(/[<>\"'&]/g, '').substring(0, 100);
+  const tagsArray = Array.isArray(tags) ? tags : [tags].filter(Boolean);
+  const sanitizedTags = tagsArray
+    .filter((tag): tag is string => tag !== undefined && tag !== null)
+    .map(tag => tag.toString().replace(/[<>\"'&]/g, '').substring(0, 50))
+    .slice(0, 5); // Limit to 5 tags
+  const tagsString = sanitizedTags.join(',');
 
   try {
     const browser = await puppeteer.launch({
@@ -35,9 +41,9 @@ export default async function handler(
       deviceScaleFactor: 1,
     });
 
-    // Load the OG template with parameters
+    // Load the OG template with sanitized parameters
     const templatePath = path.join(process.cwd(), 'public', 'og', 'og-template.html');
-    const templateUrl = `file://${templatePath}?title=${encodeURIComponent(title)}&tags=${encodeURIComponent(tagsString)}`;
+    const templateUrl = `file://${templatePath}?title=${encodeURIComponent(sanitizedTitle)}&tags=${encodeURIComponent(tagsString)}`;
 
     await page.goto(templateUrl, { waitUntil: 'networkidle0' });
 
