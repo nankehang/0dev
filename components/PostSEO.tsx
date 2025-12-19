@@ -17,7 +17,7 @@ export default function PostSEO({
   tags,
   publishedTime,
   modifiedTime,
-  image = '/og-image.png'
+  image
 }: PostSEOProps) {
   const router = useRouter();
   const url = `https://www.0dev.io${router.asPath}`;
@@ -26,6 +26,9 @@ export default function PostSEO({
   const fullDescription = description.length > 160
     ? `${description.substring(0, 157)}...`
     : description;
+
+  // Generate dynamic OG image URL using our API
+  const ogImageUrl = `https://www.0dev.io/api/og-image?title=${encodeURIComponent(title)}&tags=${encodeURIComponent(tags.join(','))}`;
 
   const seoConfig = {
     title: `${title} | 0dev.io`,
@@ -40,16 +43,9 @@ export default function PostSEO({
       siteName: '0dev.io',
       images: [
         {
-          url: image,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
-          alt: `${title} - 0dev.io`,
-          type: 'image/png',
-        },
-        {
-          url: '/og-image-square.png',
-          width: 400,
-          height: 400,
           alt: `${title} - 0dev.io`,
           type: 'image/png',
         },
@@ -67,7 +63,7 @@ export default function PostSEO({
       cardType: 'summary_large_image',
       title: `${title} | 0dev.io`,
       description: fullDescription,
-      images: [image],
+      images: [ogImageUrl],
     },
     additionalMetaTags: [
       {

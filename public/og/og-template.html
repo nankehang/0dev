@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OG Image Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated background grid */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    /* Terminal window effect */
+    .terminal {
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid #ff0000;
+      border-radius: 8px;
+      width: 1100px;
+      height: 550px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+
+    .terminal-header {
+      background: #ff0000;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 6px 6px 0 0;
+    }
+
+    .terminal-title {
+      color: black;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .terminal-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: none;
+    }
+
+    .button.red { background: #ff5f57; }
+    .button.yellow { background: #ffbd2e; }
+    .button.green { background: #28ca42; }
+
+    .terminal-content {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .terminal-content::before {
+      content: '> ';
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      color: #00ff00;
+      font-size: 18px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .title {
+      color: #ff0000;
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      line-height: 1.2;
+      max-width: 900px;
+    }
+
+    .subtitle {
+      color: #00ff00;
+      font-size: 24px;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .tag {
+      background: rgba(255, 0, 0, 0.1);
+      border: 1px solid #ff0000;
+      color: #ff0000;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .site-name {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      color: #666;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* Matrix rain effect */
+    .matrix-rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .matrix-rain::after {
+      content: '0101001001010010010100100101001001010010';
+      position: absolute;
+      top: -100px;
+      left: 10%;
+      color: rgba(0, 255, 0, 0.1);
+      font-size: 14px;
+      animation: rain 15s linear infinite;
+    }
+
+    .matrix-rain::before {
+      content: '01101100011001010110111000100000011001000110010101110110';
+      position: absolute;
+      top: -200px;
+      right: 15%;
+      color: rgba(255, 0, 0, 0.1);
+      font-size: 12px;
+      animation: rain 20s linear infinite;
+    }
+
+    @keyframes rain {
+      0% { transform: translateY(-100px); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(630px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="matrix-rain"></div>
+  <div class="terminal">
+    <div class="terminal-header">
+      <div class="terminal-title">0dev.io - Terminal</div>
+      <div class="terminal-buttons">
+        <div class="button red"></div>
+        <div class="button yellow"></div>
+        <div class="button green"></div>
+      </div>
+    </div>
+    <div class="terminal-content">
+      <div class="title" id="title">Welcome to 0dev.io Blog</div>
+      <div class="subtitle">Research notes on WinAPI, malware development, and digital forensics</div>
+      <div class="tags" id="tags">
+        <span class="tag">#hacking</span>
+        <span class="tag">#malware</span>
+        <span class="tag">#research</span>
+      </div>
+    </div>
+  </div>
+  <div class="site-name">0dev.io</div>
+
+  <script>
+    // Get URL parameters for dynamic content
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get('title') || 'Welcome to 0dev.io Blog';
+    const tags = urlParams.get('tags') || 'hacking,malware,research';
+
+    // Update title
+    document.getElementById('title').textContent = decodeURIComponent(title);
+
+    // Update tags
+    const tagsContainer = document.getElementById('tags');
+    if (tags) {
+      const tagArray = tags.split(',');
+      tagsContainer.innerHTML = tagArray.map(tag =>
+        `<span class="tag">#${tag.trim()}</span>`
+      ).join('');
+    }
+  </script>
+</body>
+</html>
