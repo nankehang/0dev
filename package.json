@@ -8,10 +8,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "migrate": "node scripts/migrate-posts.js"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
+    "@vercel/postgres": "^0.10.0",
     "axios": "^1.4.0",
     "bcryptjs": "^3.0.3",
     "date-fns": "^4.1.0",
