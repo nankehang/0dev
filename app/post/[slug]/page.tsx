@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const postDescription = "Research notes on WinAPI, malware development, and digital forensics.";
   const postSlug = slug;
 
-  const ogImageUrl = "https://www.0dev.io/og/og-welcome.png";
+  const ogImageUrl = "https://www.0dev.io/og-image.png";
 
   return {
     title: `${postTitle} - 0dev.io`,
