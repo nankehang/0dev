@@ -1,20 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  
+
   // Image optimization
   images: {
     domains: [],
     formats: ['image/avif', 'image/webp'],
   },
-  
+
   // Performance optimizations
   compress: true,
-  
+
   // SEO optimizations
   async headers() {
     return [
