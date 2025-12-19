@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 import HackerNavbar from '@/components/HackerNavbar';
 import HackerFooter from '@/components/HackerFooter';
 import { Providers } from '@/components/providers';
+import DomainForSaleAlert from '@/components/DomainForSaleAlert';
 import { headers } from 'next/headers';
 
 const inter = Inter({
@@ -94,6 +95,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-hacker-black text-matrix-green font-sans">
         <Providers>
+          <DomainForSaleAlert />
           <div className="min-h-screen bg-hacker-black text-matrix-green">
             <HackerNavbar />
             {children}
