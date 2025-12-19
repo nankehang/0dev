@@ -27,8 +27,8 @@ export default function PostSEO({
     ? `${description.substring(0, 157)}...`
     : description;
 
-  // Generate dynamic OG image URL using our API
-  const ogImageUrl = `https://www.0dev.io/api/og-image?title=${encodeURIComponent(title)}&tags=${encodeURIComponent(tags.join(','))}`;
+  // Use static OG image for now (we can make it dynamic later)
+  const ogImageUrl = image || 'https://www.0dev.io/og-image.png';
 
   const seoConfig = {
     title: `${title} | 0dev.io`,
