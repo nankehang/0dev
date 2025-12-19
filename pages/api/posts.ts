@@ -1,14 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
-import { createPostsTable, getPosts, createPost } from '../../lib/db';
+import { getPosts, createPost } from '../../lib/db';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Ensure table exists
-  await createPostsTable();
-
   const session = await getServerSession(req, res, {});
 
   if (req.method === 'GET') {

@@ -1,15 +1,58 @@
+import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { createPostsTable, createPost } from '../lib/db';
+
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+  console.error('Please define the MONGODB_URI environment variable');
+  process.exit(1);
+}
+
+// Post Schema
+const PostSchema = new mongoose.Schema({
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  excerpt: {
+    type: String,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  tags: [{
+    type: String,
+  }],
+});
+
+const Post = mongoose.models.Post || mongoose.model('Post', PostSchema);
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
 async function migratePosts() {
-  console.log('Starting migration...');
+  console.log('Connecting to MongoDB...');
 
-  // Ensure table exists
-  await createPostsTable();
+  try {
+    await mongoose.connect(MONGODB_URI);
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Failed to connect to MongoDB:', error);
+    process.exit(1);
+  }
+
+  console.log('Starting migration...');
 
   if (!fs.existsSync(postsDirectory)) {
     console.log('No posts directory found');
@@ -28,13 +71,15 @@ async function migratePosts() {
     const { data, content } = matter(fileContents);
 
     try {
-      await createPost({
+      const post = new Post({
         slug,
         title: data.title || slug,
         content,
         excerpt: data.excerpt || content.substring(0, 150) + '...',
         tags: data.tags || []
       });
+
+      await post.save();
       console.log(`Migrated: ${slug}`);
     } catch (error) {
       console.error(`Failed to migrate ${slug}:`, error);
@@ -42,6 +87,7 @@ async function migratePosts() {
   }
 
   console.log('Migration complete!');
+  await mongoose.disconnect();
 }
 
 // Run migration
