@@ -153,6 +153,17 @@ export default function PostPage() {
         <title>{post.title} - 0dev.io</title>
         <meta name="description" content={post.content?.substring(0, 160) || post.title} />
         <link rel="canonical" href={`https://www.0dev.io/post/${post.slug}`} />
+        
+        {/* Twitter Card meta tags (must come first) */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@0dev_io" />
+        <meta name="twitter:creator" content="@0dev_io" />
+        <meta name="twitter:title" content={`${post.title} - 0dev.io`} />
+        <meta name="twitter:description" content={post.content?.substring(0, 160) || post.title} />
+        <meta name="twitter:image" content="https://www.0dev.io/og-image.png" />
+        <meta name="twitter:image:alt" content={`${post.title} - 0dev.io`} />
+        
+        {/* Open Graph meta tags */}
         <meta property="og:title" content={`${post.title} - 0dev.io`} />
         <meta property="og:description" content={post.content?.substring(0, 160) || post.title} />
         <meta property="og:image" content="https://www.0dev.io/og-image.png" />
@@ -162,13 +173,6 @@ export default function PostPage() {
         <meta property="og:url" content={`https://www.0dev.io/post/${post.slug}`} />
         <meta property="og:type" content="article" />
         <meta property="og:site_name" content="0dev.io" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@0dev_io" />
-        <meta name="twitter:creator" content="@0dev_io" />
-        <meta name="twitter:title" content={`${post.title} - 0dev.io`} />
-        <meta name="twitter:description" content={post.content?.substring(0, 160) || post.title} />
-        <meta name="twitter:image" content="https://www.0dev.io/og-image.png" />
-        <meta name="twitter:image:alt" content={`${post.title} - 0dev.io`} />
         {post.tags && post.tags.map((tag) => (
           <meta key={tag} property="article:tag" content={tag} />
         ))}
