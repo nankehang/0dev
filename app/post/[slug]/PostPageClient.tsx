@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import ReactMarkdown from 'react-markdown';
 import { useSession } from 'next-auth/react';
 import SocialShare from '@/components/SocialShare';
+import { pageview } from '@/lib/gtag';
 
 interface Post {
   slug: string;
@@ -56,6 +57,8 @@ export default function PostPageClient({ params }: PostPageClientProps) {
       router.push('/');
     } finally {
       setLoading(false);
+      // Track page view for Google Analytics
+      pageview(window.location.pathname);
     }
   };
 

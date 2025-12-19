@@ -6,6 +6,7 @@ import HackerFooter from '@/components/HackerFooter';
 import { Providers } from '@/components/providers';
 import DomainForSaleAlert from '@/components/DomainForSaleAlert';
 import { headers } from 'next/headers';
+import Script from 'next/script';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -102,6 +103,19 @@ export default function RootLayout({
             <HackerFooter />
           </div>
         </Providers>
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-NVCRDB7ECY`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NVCRDB7ECY');
+          `}
+        </Script>
       </body>
     </html>
   );
