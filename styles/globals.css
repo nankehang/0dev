@@ -2,17 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global Styles for 0dev.io */
+/* Global Styles for 0dev.io Hacker Blog */
 
 @layer base {
   * {
-    @apply border-gray-800;
+    @apply border-hacker-red/20;
   }
-  
+
   body {
-    @apply bg-dark-900 text-white antialiased;
+    @apply bg-hacker-black text-matrix-green antialiased;
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
@@ -23,50 +23,50 @@
   .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
-  
+
   /* Button Styles */
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-all duration-300 ease-in-out;
+    @apply inline-flex items-center justify-center px-6 py-3 font-mono rounded-lg transition-all duration-300 ease-in-out;
   }
-  
+
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white shadow-lg shadow-primary-500/50 hover:shadow-primary-600/50 hover:-translate-y-0.5;
+    @apply bg-hacker-red hover:bg-hacker-darkred text-black shadow-lg shadow-hacker-red/50 hover:shadow-hacker-red/70 hover:-translate-y-0.5;
   }
-  
+
   .btn-secondary {
-    @apply bg-transparent border border-gray-700 hover:border-primary-500 hover:bg-dark-700 text-white;
+    @apply bg-transparent border-2 border-hacker-red hover:bg-hacker-red hover:text-black text-hacker-red;
   }
-  
+
   /* Card Styles */
   .card {
-    @apply bg-dark-700 border border-gray-800 rounded-xl p-6 transition-all duration-300 hover:border-primary-500 hover:-translate-y-1 hover:shadow-xl;
+    @apply bg-hacker-darkgray border-2 border-hacker-red rounded-lg p-6 transition-all duration-300 hover:border-matrix-green hover:-translate-y-1 hover:shadow-xl hover:shadow-hacker-red/20;
   }
-  
+
   /* Section Styles */
   .section {
     @apply py-16 md:py-24;
   }
-  
+
   .section-header {
     @apply text-center mb-12 md:mb-16;
   }
   
   .section-title {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold mb-4;
+    @apply text-3xl md:text-4xl lg:text-5xl font-mono font-bold text-hacker-red mb-4;
   }
-  
+
   .section-subtitle {
-    @apply text-lg md:text-xl text-gray-400;
+    @apply text-lg md:text-xl text-hacker-lightgray;
   }
-  
+
   /* Gradient Text */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-500 to-purple-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-hacker-red to-matrix-green bg-clip-text text-transparent;
   }
-  
+
   /* Glow Effect */
   .glow {
-    @apply shadow-lg shadow-primary-500/30;
+    @apply shadow-lg shadow-hacker-red/30;
   }
 }
 
@@ -76,28 +76,28 @@
     width: 6px;
     height: 6px;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-track {
-    @apply bg-dark-800;
+    @apply bg-hacker-black;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-gray-700 rounded-full;
+    @apply bg-hacker-red rounded-full;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-600;
+    @apply bg-hacker-darkred;
   }
-  
+
   /* Animation delays */
   .animation-delay-200 {
     animation-delay: 0.2s;
   }
-  
+
   .animation-delay-400 {
     animation-delay: 0.4s;
   }
-  
+
   .animation-delay-600 {
     animation-delay: 0.6s;
   }
@@ -119,21 +119,21 @@
 
 /* Code block styling */
 pre {
-  @apply bg-dark-800 rounded-lg p-4 overflow-x-auto scrollbar-thin;
+  @apply bg-hacker-black rounded-lg p-4 overflow-x-auto scrollbar-thin border border-hacker-red/30;
 }
 
 code {
-  @apply font-mono text-sm;
+  @apply font-mono text-sm text-hacker-red;
 }
 
 /* Selection styling */
 ::selection {
-  @apply bg-primary-500 text-white;
+  @apply bg-hacker-red text-black;
 }
 
 /* Focus styles for accessibility */
 :focus-visible {
-  @apply outline-2 outline-offset-2 outline-primary-500;
+  @apply outline-2 outline-offset-2 outline-hacker-red;
 }
 
 /* Loading animation */
@@ -144,4 +144,40 @@ code {
 /* Backdrop blur for modals/overlays */
 .backdrop-blur-custom {
   backdrop-filter: blur(12px);
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.matrix-rain::before {
+  content: "01010010011001010101001101000101";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(transparent, rgba(255, 0, 0, 0.1), transparent);
+  animation: matrix-fall 10s linear infinite;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: rgba(255, 0, 0, 0.3);
+  white-space: pre;
+  line-height: 1.5;
+}
+
+@keyframes matrix-fall {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }

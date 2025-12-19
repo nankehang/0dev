@@ -1,44 +1,33 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { useEffect } from 'react';
+import { SessionProvider } from 'next-auth/react';
+import HackerNavbar from '@/components/HackerNavbar';
+import HackerFooter from '@/components/HackerFooter';
 import { useRouter } from 'next/router';
-import * as gtag from '@/lib/gtag';
-import { DefaultSeo } from 'next-seo';
-import SEO from '@/lib/next-seo.config';
+import { useEffect } from 'react';
 
 /**
  * Custom App Component
  * Wraps all pages and handles global state, analytics tracking
  */
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
-  
-  // Track page views on route change
+
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      gtag.pageview(url);
-    };
-    
-    router.events.on('routeChangeComplete', handleRouteChange);
-    
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
-  
-  // Console easter egg for developers
-  useEffect(() => {
-    console.log('%c🚀 0dev.io', 'font-size: 24px; font-weight: bold; color: #6366f1;');
-    console.log('%cInterested in acquiring this premium domain?', 'font-size: 14px; color: #a1a1aa;');
-    console.log('%cContact us at: khusanakihang@gmail.com', 'font-size: 14px; color: #10b981;');
-    console.log('%c\nShort, memorable, and perfect for tech startups! 💎', 'font-size: 12px; color: #8b5cf6;');
+    // Easter egg in console
+    console.log('%c> SYSTEM_ACCESS_GRANTED', 'color: #FF0000; font-size: 20px; font-family: monospace;');
+    console.log('%c> Welcome to 0dev.io research notes', 'color: #00FF41; font-size: 14px; font-family: monospace;');
+    console.log('%c> Contact: khusanakihang@gmail.com', 'color: #00FF41; font-size: 12px; font-family: monospace;');
   }, []);
-  
+
   return (
-    <>
-      <DefaultSeo {...SEO} />
-      <Component {...pageProps} />
-    </>
+    <SessionProvider session={session}>
+      <div className="min-h-screen bg-hacker-black text-matrix-green">
+        {router.pathname !== '/login' && <HackerNavbar />}
+        <Component {...pageProps} />
+        {router.pathname !== '/login' && <HackerFooter />}
+      </div>
+    </SessionProvider>
   );
 }
 
