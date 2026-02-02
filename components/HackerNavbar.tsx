@@ -30,6 +30,12 @@ const HackerNavbar: React.FC = () => {
             >
               [NOTES]
             </Link>
+            <Link
+              href="/my-vision"
+              className="text-matrix-green hover:text-hacker-red transition-colors font-mono"
+            >
+              [MY_VISION]
+            </Link>
             {session ? (
               <>
                 <Link
@@ -80,6 +86,12 @@ const HackerNavbar: React.FC = () => {
                 className="text-matrix-green hover:text-hacker-red transition-colors font-mono"
               >
                 [NOTES]
+              </Link>
+              <Link
+                href="/my-vision"
+                className="text-matrix-green hover:text-hacker-red transition-colors font-mono"
+              >
+                [MY_VISION]
               </Link>
               {session ? (
                 <>
