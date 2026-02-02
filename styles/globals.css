@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap');
+
+:root {
+  --primary: #00ff88;
+  --secondary: #00d4ff;
+  --accent: #ff0080;
+  --dark: #0a0e1a;
+  --darker: #050810;
+  --text: #e0e6ed;
+  --text-dim: #8892a6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'JetBrains Mono', monospace;
+}
