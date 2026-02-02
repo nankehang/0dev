@@ -1,35 +1,43 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from '@/lib/mongodb';
-import CountdownSettings from '@/models/CountdownSettings';
+
+// Default fallback data (Bangkok timezone: midnight Bangkok = 17:00 UTC previous day)
+const defaultSettings = {
+  targetDate: '2028-12-31T17:00:00.000Z', // = 2029-01-01 00:00:00 Bangkok
+  title: 'Mission Countdown',
+  subtitle: 'The Journey to Excellence',
+  goals: [
+    { icon: '🎓', title: 'IELTS Excellence', description: 'Master English at International Level' },
+    { icon: '🔐', title: 'Offensive Cyber Research', description: 'Cybersecurity Expertise' },
+    { icon: '💰', title: 'Secure Funding', description: 'For a Better Future' },
+    { icon: '🚀', title: 'Beyond & More', description: 'Progress Every Single Day' },
+  ],
+};
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await dbConnect();
-
   if (req.method === 'GET') {
     try {
+      // Try to connect to MongoDB
+      const dbConnect = (await import('@/lib/mongodb')).default;
+      const CountdownSettings = (await import('@/models/CountdownSettings')).default;
+      
+      await dbConnect();
+      
       let settings = await CountdownSettings.findOne({ key: 'my-vision' });
 
-      // If no settings exist, create default ones with target date 1/1/2029 Bangkok time (UTC+7)
+      // If no settings exist, create default ones
       if (!settings) {
-        // Bangkok is UTC+7, so midnight Bangkok = 17:00 UTC previous day
         settings = await CountdownSettings.create({
           key: 'my-vision',
-          targetDate: new Date('2028-12-31T17:00:00.000Z'), // = 2029-01-01 00:00:00 Bangkok
-          title: 'Mission Countdown',
-          subtitle: 'The Journey to Excellence',
-          goals: [
-            { icon: '🎓', title: 'IELTS Excellence', description: 'Master English at International Level' },
-            { icon: '🔐', title: 'Offensive Cyber Research', description: 'Cybersecurity Expertise' },
-            { icon: '💰', title: 'Secure Funding', description: 'For a Better Future' },
-            { icon: '🚀', title: 'Beyond & More', description: 'Progress Every Single Day' },
-          ],
+          targetDate: new Date(defaultSettings.targetDate),
+          title: defaultSettings.title,
+          subtitle: defaultSettings.subtitle,
+          goals: defaultSettings.goals,
         });
       }
 
-      // Calculate initial time (from now to target)
       const now = new Date();
       const initialTime = settings.targetDate.getTime() - now.getTime();
 
@@ -44,8 +52,23 @@ export default async function handler(
         },
       });
     } catch (error) {
-      console.error('Error fetching countdown settings:', error);
-      return res.status(500).json({ success: false, error: 'Failed to fetch settings' });
+      console.error('MongoDB connection failed, using fallback:', error);
+      
+      // Return fallback data when MongoDB is unavailable
+      const now = new Date();
+      const targetDate = new Date(defaultSettings.targetDate);
+      const initialTime = targetDate.getTime() - now.getTime();
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          targetDate: defaultSettings.targetDate,
+          title: defaultSettings.title,
+          subtitle: defaultSettings.subtitle,
+          goals: defaultSettings.goals,
+          initialTime,
+        },
+      });
     }
   }
 

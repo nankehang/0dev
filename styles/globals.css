@@ -285,6 +285,23 @@ pre code {
   @apply text-matrix-green hover:text-matrix-light transition-colors duration-200 underline decoration-matrix-green/30 hover:decoration-matrix-green;
 }
 
+/* Override Tailwind for my-vision page */
+.my-vision-page,
+.my-vision-page *,
+.my-vision-page *::before,
+.my-vision-page *::after {
+  all: revert !important;
+}
+
+.my-vision-page {
+  font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Fira Code', 'Consolas', monospace !important;
+  background: linear-gradient(135deg, #050810 0%, #0a0e1a 50%, #050810 100%) !important;
+  min-height: 100vh !important;
+  color: #e0e6ed !important;
+  line-height: 1.6 !important;
+  box-sizing: border-box !important;
+}
+
 /* Matrix Rain Effect - Subtle */
 .matrix-rain {
   position: absolute;
