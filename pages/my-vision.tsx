@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import styles from '../styles/MyVision.module.css';
+import styles from '@/styles/MyVision.module.css';
 
 interface TimeLeft {
   years: number;
@@ -13,34 +13,75 @@ interface TimeLeft {
   seconds: number;
 }
 
+interface Goal {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface CountdownData {
+  targetDate: string;
+  title: string;
+  subtitle: string;
+  goals: Goal[];
+  initialTime: number;
+}
+
 interface AnimatedValues {
   [key: string]: boolean;
 }
 
 export default function MyVision() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [countdownData, setCountdownData] = useState<CountdownData | null>(null);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    years: 2,
-    months: 24,
-    weeks: 168,
-    days: 1176,
-    hours: 16464,
-    minutes: 987840,
-    seconds: 59270400,
+    years: 0,
+    months: 0,
+    weeks: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
   const [progress, setProgress] = useState(0);
   const [animatedValues, setAnimatedValues] = useState<AnimatedValues>({});
-  const [targetDate] = useState(() => {
-    const date = new Date();
-    date.setFullYear(date.getFullYear() + 2);
-    return date;
-  });
-  const [initialTime] = useState(() => {
-    const date = new Date();
-    date.setFullYear(date.getFullYear() + 2);
-    return date.getTime() - Date.now();
-  });
+
+  // Fetch countdown settings from API
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const res = await fetch('/api/countdown');
+        const json = await res.json();
+        if (json.success) {
+          setCountdownData(json.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch countdown settings:', error);
+        // Fallback to default (Bangkok timezone UTC+7)
+        // Midnight Bangkok = 17:00 UTC previous day
+        setCountdownData({
+          targetDate: '2028-12-31T17:00:00.000Z', // = 2029-01-01 00:00:00 Bangkok
+          title: 'Mission Countdown',
+          subtitle: 'The Journey to Excellence',
+          goals: [
+            { icon: '🎓', title: 'IELTS Excellence', description: 'Master English at International Level' },
+            { icon: '🔐', title: 'Offensive Cyber Research', description: 'Cybersecurity Expertise' },
+            { icon: '💰', title: 'Secure Funding', description: 'For a Better Future' },
+            { icon: '🚀', title: 'Beyond & More', description: 'Progress Every Single Day' },
+          ],
+          initialTime: new Date('2028-12-31T17:00:00.000Z').getTime() - Date.now(),
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchSettings();
+  }, []);
 
   const updateCountdown = useCallback(() => {
+    if (!countdownData) return;
+
+    const targetDate = new Date(countdownData.targetDate);
     const now = new Date();
     const timeDiff = targetDate.getTime() - now.getTime();
 
@@ -109,16 +150,20 @@ export default function MyVision() {
       return newTimeLeft;
     });
 
-    // Update progress
-    const progressPercent = ((initialTime - timeDiff) / initialTime) * 100;
-    setProgress(Math.max(0, progressPercent));
-  }, [targetDate, initialTime]);
+    // Update progress - show remaining time like a glass emptying
+    // 100% = full (all time remaining), 0% = empty (time's up)
+    const totalDuration = countdownData.initialTime;
+    const remainingPercent = (timeDiff / totalDuration) * 100;
+    setProgress(Math.max(0, Math.min(100, remainingPercent)));
+  }, [countdownData]);
 
   useEffect(() => {
+    if (!countdownData) return;
+    
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
-  }, [updateCountdown]);
+  }, [updateCountdown, countdownData]);
 
   // Cursor trail effect
   useEffect(() => {
@@ -153,7 +198,7 @@ export default function MyVision() {
   }, []);
 
   const formatNumber = (num: number): string => {
-    return num.toLocaleString('th-TH');
+    return num.toLocaleString('en-US');
   };
 
   const timeBlocks: Array<{ key: keyof TimeLeft; label: string }> = [
@@ -166,22 +211,30 @@ export default function MyVision() {
     { key: 'seconds', label: 'Seconds' },
   ];
 
-  const goals = [
-    { icon: '🎓', title: 'IELTS Excellence', description: 'Master English at International Level' },
-    { icon: '🔐', title: 'Offensive Cyber Research', description: 'Cybersecurity Expertise' },
-    { icon: '💰', title: 'Secure Funding', description: 'For a Better Future' },
-    { icon: '🚀', title: 'Beyond & More', description: 'Progress Every Single Day' },
-  ];
+  if (isLoading) {
+    return (
+      <div className={styles.pageWrapper}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingSpinner} />
+          <p>Loading mission data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const title = countdownData?.title || 'Mission Countdown';
+  const subtitle = countdownData?.subtitle || 'The Journey to Excellence';
+  const goals = countdownData?.goals || [];
 
   return (
     <>
       <Head>
-        <title>Mission Countdown - 2 Years Journey</title>
-        <meta name="description" content="My 2-year mission countdown to excellence" />
+        <title>{title} - Journey to 2029</title>
+        <meta name="description" content="My mission countdown to January 1, 2029" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className={styles.body}>
+      <div className={styles.pageWrapper}>
         <div className={styles.bgPattern} />
         <div className={styles.gridOverlay} />
 
@@ -192,8 +245,9 @@ export default function MyVision() {
 
         <div className={styles.container}>
           <header className={styles.header}>
-            <h1 className={styles.missionTitle}>Mission Countdown</h1>
-            <p className={styles.subtitle}>The Journey to Excellence</p>
+            <h1 className={styles.missionTitle}>{title}</h1>
+            <p className={styles.subtitle}>{subtitle}</p>
+            <p className={styles.targetDate}>🎯 Target: 1 มกราคม 2029 (00:00 Bangkok Time)</p>
           </header>
 
           <div className={styles.countdownGrid}>
@@ -211,16 +265,21 @@ export default function MyVision() {
             ))}
           </div>
 
-          <div className={styles.progressBarContainer}>
-            <div
-              className={styles.progressBar}
-              style={{ width: `${progress}%` }}
-            />
-            <div className={styles.progressText}>{progress.toFixed(2)}%</div>
+          <div className={styles.glassContainer}>
+            <div className={styles.glassLabel}>⏳ Time Remaining</div>
+            <div className={styles.glass}>
+              <div
+                className={styles.glassWater}
+                style={{ height: `${progress}%` }}
+              />
+              <div className={styles.glassCracks} style={{ opacity: progress < 50 ? (50 - progress) / 50 : 0 }} />
+              <div className={styles.glassShine} />
+            </div>
+            <div className={styles.glassPercent}>{progress.toFixed(2)}%</div>
           </div>
 
           <section className={styles.goalsSection}>
-            <h2 className={styles.goalsTitle}>🎯 2-Year Mission Goals</h2>
+            <h2 className={styles.goalsTitle}>🎯 Mission Goals - 2029</h2>
             {goals.map((goal, index) => (
               <div key={index} className={styles.goalItem}>
                 <span className={styles.goalIcon}>{goal.icon}</span>

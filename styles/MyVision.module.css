@@ -1,12 +1,42 @@
-.body {
+/* Page wrapper - full screen isolated styles */
+.pageWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   font-family: 'JetBrains Mono', monospace;
-  background: var(--darker);
-  color: var(--text);
+  background: #050810;
+  color: #e0e6ed;
   overflow-x: hidden;
-  min-height: 100vh;
+  overflow-y: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Loading state */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #00ff88;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 255, 136, 0.2);
+  border-top-color: #00ff88;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Animated background */
@@ -21,6 +51,7 @@
     radial-gradient(circle at 80% 50%, rgba(0, 212, 255, 0.03) 0%, transparent 50%);
   z-index: 0;
   animation: bgPulse 8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes bgPulse {
@@ -40,6 +71,7 @@
   background-size: 50px 50px;
   z-index: 0;
   animation: gridMove 20s linear infinite;
+  pointer-events: none;
 }
 
 @keyframes gridMove {
@@ -76,7 +108,7 @@
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 900;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -95,25 +127,34 @@
   transform: translateX(-50%);
   width: 100px;
   height: 3px;
-  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  background: linear-gradient(90deg, transparent, #00ff88, transparent);
   animation: glow 2s ease-in-out infinite;
 }
 
 @keyframes glow {
-  0%, 100% { opacity: 0.5; box-shadow: 0 0 10px var(--primary); }
-  50% { opacity: 1; box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary); }
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 10px #00ff88; }
+  50% { opacity: 1; box-shadow: 0 0 20px #00ff88, 0 0 30px #00ff88; }
 }
 
 .subtitle {
   font-size: 1.1rem;
-  color: var(--text-dim);
+  color: #8892a6;
   letter-spacing: 0.1em;
   font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.targetDate {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: #00d4ff;
+  letter-spacing: 0.15em;
+  margin-top: 1rem;
 }
 
 .countdownGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
 }
@@ -155,7 +196,7 @@
 }
 
 .timeBlock:hover {
-  border-color: var(--primary);
+  border-color: #00ff88;
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
   transform: translateY(-5px);
 }
@@ -166,9 +207,9 @@
 
 .timeValue {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: 700;
-  color: var(--primary);
+  color: #00ff88;
   display: block;
   margin-bottom: 0.5rem;
   text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
@@ -177,12 +218,12 @@
 
 .timeValueAnimated {
   transform: scale(1.1);
-  color: var(--secondary);
+  color: #00d4ff;
 }
 
 .timeLabel {
-  font-size: 0.9rem;
-  color: var(--text-dim);
+  font-size: 0.85rem;
+  color: #8892a6;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 300;
@@ -211,7 +252,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  background: linear-gradient(90deg, #00ff88, #00d4ff, #ff0080);
   background-size: 200% 100%;
   animation: gradientFlow 3s linear infinite;
 }
@@ -224,7 +265,7 @@
 .goalsTitle {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.8rem;
-  color: var(--secondary);
+  color: #00d4ff;
   margin-bottom: 1.5rem;
   text-align: center;
   letter-spacing: 0.1em;
@@ -237,7 +278,7 @@
   padding: 1rem;
   margin-bottom: 1rem;
   background: rgba(0, 255, 136, 0.05);
-  border-left: 3px solid var(--primary);
+  border-left: 3px solid #00ff88;
   border-radius: 8px;
   transition: all 0.3s ease;
   animation: slideRight 0.8s ease-out backwards;
@@ -246,6 +287,7 @@
 .goalItem:nth-child(2) { animation-delay: 0.2s; }
 .goalItem:nth-child(3) { animation-delay: 0.4s; }
 .goalItem:nth-child(4) { animation-delay: 0.6s; }
+.goalItem:nth-child(5) { animation-delay: 0.8s; }
 
 @keyframes slideRight {
   from { opacity: 0; transform: translateX(-30px); }
@@ -255,7 +297,7 @@
 .goalItem:hover {
   background: rgba(0, 255, 136, 0.1);
   transform: translateX(10px);
-  border-left-color: var(--secondary);
+  border-left-color: #00d4ff;
 }
 
 .goalIcon {
@@ -263,10 +305,6 @@
   margin-right: 1rem;
   animation: float 3s ease-in-out infinite;
 }
-
-.goalItem:nth-child(2) .goalIcon { animation-delay: 0.5s; }
-.goalItem:nth-child(3) .goalIcon { animation-delay: 1s; }
-.goalItem:nth-child(4) .goalIcon { animation-delay: 1.5s; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -276,6 +314,11 @@
 .goalText {
   font-size: 1.1rem;
   line-height: 1.6;
+  color: #e0e6ed;
+}
+
+.goalText strong {
+  color: #00ff88;
 }
 
 .motivation {
@@ -295,7 +338,7 @@
 .motivationText {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.3rem;
-  color: var(--accent);
+  color: #ff0080;
   font-weight: 600;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
@@ -303,7 +346,7 @@
 
 .motivationSubtitle {
   font-size: 0.9rem;
-  color: var(--text-dim);
+  color: #8892a6;
   font-style: italic;
   letter-spacing: 0.05em;
 }
@@ -326,7 +369,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--primary));
+  background: linear-gradient(90deg, #ff0080, #00ff88);
   background-size: 200% 100%;
   animation: gradientFlow 3s linear infinite;
 }
@@ -334,7 +377,7 @@
 .invictusTitle {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.5rem;
-  color: var(--accent);
+  color: #ff0080;
   text-align: center;
   margin-bottom: 1.5rem;
   letter-spacing: 0.15em;
@@ -345,14 +388,14 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
   line-height: 1.8;
-  color: var(--text);
+  color: #e0e6ed;
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
 }
 
 .invictusPoem p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   opacity: 0;
   animation: fadeInPoem 1s ease-out forwards;
 }
@@ -362,8 +405,13 @@
 .invictusPoem p:nth-child(3) { animation-delay: 0.6s; }
 .invictusPoem p:nth-child(4) { animation-delay: 0.8s; }
 
+@keyframes fadeInPoem {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .highlight {
-  color: var(--primary);
+  color: #00ff88;
   font-weight: 600;
   text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
@@ -372,59 +420,146 @@
   text-align: center;
   margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: var(--text-dim);
+  color: #8892a6;
   font-style: italic;
 }
 
-@keyframes fadeInPoem {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Glass Container - Time Remaining Effect */
+.glassContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 0;
+  animation: fadeIn 1s ease-out;
 }
 
-.progressBarContainer {
-  margin: 2rem 0;
-  background: rgba(10, 14, 26, 0.6);
-  border-radius: 10px;
-  height: 40px;
+.glassLabel {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  color: #00d4ff;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.glass {
   position: relative;
+  width: 120px;
+  height: 200px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  border: 2px solid rgba(0, 255, 136, 0.3);
+  border-radius: 0 0 20px 20px;
+  border-top: none;
   overflow: hidden;
-  border: 1px solid rgba(0, 255, 136, 0.2);
+  box-shadow: 
+    inset 0 0 30px rgba(0, 255, 136, 0.1),
+    0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-.progressBar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  border-radius: 10px;
-  transition: width 1s ease;
-  position: relative;
-  overflow: hidden;
+.glass::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  right: -5px;
+  height: 15px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 255, 136, 0.4),
+    rgba(0, 255, 136, 0.2)
+  );
+  border-radius: 5px 5px 0 0;
+  border: 2px solid rgba(0, 255, 136, 0.3);
+  border-bottom: none;
 }
 
-.progressBar::after {
+.glassWater {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 212, 255, 0.8) 0%,
+    rgba(0, 255, 136, 0.6) 50%,
+    rgba(0, 255, 136, 0.8) 100%
+  );
+  transition: height 1s ease-out;
+  border-radius: 0 0 18px 18px;
+}
+
+.glassWater::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
+  height: 15px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: waterWave 3s ease-in-out infinite;
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+@keyframes waterWave {
+  0%, 100% {
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    transform: translateY(-3px) scaleY(1.1);
+  }
 }
 
-.progressText {
+.glassCracks {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: 600;
-  color: var(--text);
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(45deg, transparent 40%, rgba(255, 0, 128, 0.3) 45%, transparent 50%),
+    linear-gradient(-45deg, transparent 40%, rgba(255, 0, 128, 0.3) 45%, transparent 50%),
+    linear-gradient(90deg, transparent 45%, rgba(255, 0, 128, 0.2) 50%, transparent 55%);
+  background-size: 30px 30px;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  animation: crackPulse 2s ease-in-out infinite;
+}
+
+@keyframes crackPulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+}
+
+.glassShine {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 60px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  border-radius: 10px;
+  transform: rotate(-10deg);
+}
+
+.glassPercent {
+  margin-top: 1.5rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #00ff88;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
 }
 
 /* Back link styling */
@@ -433,7 +568,7 @@
   top: 20px;
   left: 20px;
   z-index: 100;
-  color: var(--primary);
+  color: #00ff88;
   text-decoration: none;
   font-family: 'Orbitron', sans-serif;
   font-size: 0.9rem;
@@ -445,11 +580,12 @@
 }
 
 .backLink:hover {
-  border-color: var(--primary);
+  border-color: #00ff88;
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
   transform: translateX(-5px);
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .countdownGrid {
     grid-template-columns: repeat(2, 1fr);
@@ -457,5 +593,33 @@
   
   .container {
     padding: 1rem;
+    padding-top: 4rem;
+  }
+
+  .timeBlock {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .timeValue {
+    font-size: 1.5rem;
+  }
+
+  .goalsSection,
+  .invictusSection {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .missionTitle {
+    font-size: 1.5rem;
+  }
+
+  .countdownGrid {
+    gap: 1rem;
+  }
+
+  .timeBlock {
+    padding: 1rem 0.5rem;
   }
 }
