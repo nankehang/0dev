@@ -24,6 +24,7 @@ export default function Navbar() {
     { href: '#features', label: 'Features' },
     { href: '#tools', label: 'Tools' },
     { href: '#stats', label: 'Stats' },
+    { href: '/my-vision', label: '🎯 My Vision', isRoute: true },
   ];
 
   return (
@@ -47,14 +48,25 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-gray-300 hover:text-white transition-colors relative group"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
-              </a>
+              link.isRoute ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-300 hover:text-white transition-colors relative group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-300 hover:text-white transition-colors relative group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
+                </a>
+              )
             ))}
             <button
               onClick={() => trackCTAClick('navbar')}
@@ -78,14 +90,25 @@ export default function Navbar() {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 bg-dark-800 rounded-lg mt-2">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-dark-700 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-              </a>
+              link.isRoute ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-dark-700 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-dark-700 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              )
             ))}
             <div className="px-4 py-3">
               <button

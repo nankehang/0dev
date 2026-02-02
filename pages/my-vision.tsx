@@ -463,11 +463,10 @@ export default function MyVision() {
           title: 'Mission Countdown',
           subtitle: 'The Journey to Excellence',
           goals: [
-            { icon: '💼', title: 'สร้างธุรกิจของตัวเอง', description: 'เป็นผู้ประกอบการที่ประสบความสำเร็จ' },
-            { icon: '🌍', title: 'Passive Income', description: 'สร้างรายได้ passive ที่มั่นคง' },
-            { icon: '🧠', title: 'พัฒนาตัวเอง', description: 'เรียนรู้ทักษะใหม่ทุกวัน' },
-            { icon: '💪', title: 'สุขภาพดี', description: 'ออกกำลังกายสม่ำเสมอ กินอาหารดี' },
-            { icon: '✨', title: 'อิสรภาพทางการเงิน', description: 'ไม่ต้องกังวลเรื่องเงิน' },
+            { icon: '🎓', title: 'IELTS Excellence', description: 'Master English at International Level' },
+            { icon: '🔐', title: 'Offensive Cyber Research', description: 'Cybersecurity Expertise' },
+            { icon: '💰', title: 'Secure Funding', description: 'For a Better Future' },
+            { icon: '🚀', title: 'Beyond & More', description: 'Progress Every Single Day' },
           ],
           initialTime: Math.max(0, initialTime),
         });
@@ -594,7 +593,7 @@ export default function MyVision() {
           <header style={inlineStyles.header as CSSProperties}>
             <h1 style={inlineStyles.missionTitle as CSSProperties}>{title}</h1>
             <p style={inlineStyles.subtitle as CSSProperties}>{subtitle}</p>
-            <p style={inlineStyles.targetDate as CSSProperties}>🎯 Target: 1 มกราคม 2029 (00:00 Bangkok Time)</p>
+            <p style={inlineStyles.targetDate as CSSProperties}>🎯 Target: January 1, 2029 (00:00 Bangkok Time)</p>
           </header>
 
           <div style={inlineStyles.countdownGrid as CSSProperties}>
@@ -681,8 +680,8 @@ export default function MyVision() {
           <section id="donate" style={inlineStyles.donationSection as CSSProperties}>
             <h3 style={inlineStyles.donationTitle as CSSProperties}>💎 Support My Journey</h3>
             <p style={inlineStyles.donationText as CSSProperties}>
-              ถ้าคุณชอบผลงานของผม หรืออยากสนับสนุนเป้าหมายนี้<br/>
-              สามารถ Donate ได้ที่นี่ ขอบคุณมากครับ! 🙏
+              If you like my work or want to support this mission,<br/>
+              feel free to donate here. Thank you so much! 🙏
             </p>
             <div style={inlineStyles.walletCard as CSSProperties}>
               <div style={inlineStyles.walletChain as CSSProperties}>
@@ -703,7 +702,7 @@ export default function MyVision() {
               </button>
             </div>
             <p style={inlineStyles.donationNote as CSSProperties}>
-              ⚠️ กรุณาส่งเฉพาะ USDT ผ่าน BEP20 (Binance Smart Chain) เท่านั้น
+              ⚠️ Please send USDT via BEP20 (Binance Smart Chain) only
             </p>
           </section>
         </div>
