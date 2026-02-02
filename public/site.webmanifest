@@ -1,0 +1,21 @@
+{
+  "name": "0dev.io - Hacker Research Blog",
+  "short_name": "0dev.io",
+  "description": "A modern hacker-themed research blog for sharing knowledge and insights",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0a0a0f",
+  "background_color": "#0a0a0f",
+  "display": "standalone",
+  "start_url": "/"
+}

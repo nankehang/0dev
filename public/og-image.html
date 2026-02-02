@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0dev.io OG Image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff41;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+        }
+
+        .background-pattern::before,
+        .background-pattern::after {
+            content: '';
+            position: absolute;
+            border: 1px solid #00ff41;
+            animation: rotate 20s linear infinite;
+        }
+
+        .background-pattern::before {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 10%;
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+
+        .background-pattern::after {
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            right: 10%;
+            animation-duration: 25s;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #00ff41;
+            background: linear-gradient(45deg, #00ff41, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 20px;
+            max-width: 800px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            opacity: 0.8;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tag {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid #00ff41;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .matrix-rain::after {
+            content: '0101001001010010010100100101001001010010';
+            position: absolute;
+            top: -100px;
+            left: 10%;
+            font-size: 12px;
+            color: #00ff41;
+            opacity: 0.3;
+            animation: matrix-fall 8s linear infinite;
+        }
+
+        @keyframes matrix-fall {
+            0% { transform: translateY(-100px); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="matrix-rain"></div>
+
+    <div class="logo">0dev.io</div>
+    <div class="title" id="title">Hacker Research Blog</div>
+    <div class="subtitle" id="subtitle">Advanced cybersecurity insights and development techniques</div>
+
+    <div class="tags" id="tags">
+        <span class="tag">#cybersecurity</span>
+        <span class="tag">#hacking</span>
+        <span class="tag">#development</span>
+    </div>
+
+    <div class="footer">0dev.io</div>
+
+    <script>
+        // This would be populated by query parameters in a real implementation
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title') || 'Hacker Research Blog';
+        const subtitle = urlParams.get('subtitle') || 'Advanced cybersecurity insights and development techniques';
+        const tags = urlParams.get('tags') ? urlParams.get('tags').split(',') : ['cybersecurity', 'hacking', 'development'];
+
+        document.getElementById('title').textContent = title;
+        document.getElementById('subtitle').textContent = subtitle;
+
+        const tagsContainer = document.getElementById('tags');
+        tagsContainer.innerHTML = tags.map(tag => `<span class="tag">#${tag}</span>`).join('');
+    </script>
+</body>
+</html>

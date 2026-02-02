@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables for my-vision page */
 :root {
   --primary: #00ff88;
   --secondary: #00d4ff;
@@ -10,13 +15,309 @@
   --text-dim: #8892a6;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Global Styles for 0dev.io Modern Hacker Blog */
+
+@layer base {
+  * {
+    @apply border-hacker-gray/20;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-hacker-black via-hacker-darkgray to-hacker-black text-hacker-white antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
 }
 
-html,
-body {
+@layer components {
+  /* Container */
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-xl transition-all duration-300 ease-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hacker-red;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-hacker-red to-accent-purple text-white shadow-lg shadow-hacker-red/25 hover:shadow-hacker-red/40 hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply bg-hacker-darkgray border-2 border-hacker-gray hover:bg-hacker-gray hover:border-matrix-green text-hacker-white hover:text-white;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-hacker-gray text-hacker-lightgray hover:text-white;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply relative bg-gradient-to-br from-hacker-darkgray/80 to-hacker-gray/60 border border-hacker-gray/30 rounded-2xl p-8 transition-all duration-500 hover:border-matrix-green/60 hover:shadow-2xl hover:shadow-matrix-green/20 backdrop-blur-md overflow-hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  .card:hover::before {
+    left: 100%;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.05) 0%, transparent 50%, rgba(138, 43, 226, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .card:hover::after {
+    opacity: 1;
+  }
+
+  /* Line clamp utility */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Staggered animation for cards */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .card-elevated {
+    @apply bg-gradient-to-br from-hacker-white/5 to-hacker-white/10 border border-hacker-white/20 rounded-2xl p-8 shadow-2xl backdrop-blur-md;
+  }
+
+  /* Section Styles */
+  .section {
+    @apply py-20 md:py-32;
+  }
+
+  .section-header {
+    @apply text-center mb-16 md:mb-20;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold text-hacker-white mb-6 leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-xl md:text-2xl text-hacker-lightgray max-w-3xl mx-auto leading-relaxed;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-hacker-red via-accent-purple to-matrix-green bg-clip-text text-transparent font-bold;
+  }
+
+  /* Glow Effect */
+  .glow {
+    @apply shadow-2xl shadow-hacker-red/20;
+  }
+
+  /* Content Styles */
+  .content-card {
+    @apply bg-hacker-darkgray/50 backdrop-blur-sm border border-hacker-gray/30 rounded-xl p-6 md:p-8;
+  }
+
+  .content-text {
+    @apply text-hacker-white leading-relaxed;
+  }
+
+  .content-heading {
+    @apply text-2xl md:text-3xl font-bold text-hacker-white mb-4 mt-8 first:mt-0;
+  }
+
+  .content-subheading {
+    @apply text-xl md:text-2xl font-semibold text-matrix-green mb-3 mt-6;
+  }
+
+  /* Search Input */
+  .search-input {
+    @apply bg-hacker-darkgray/50 border border-hacker-gray/50 rounded-lg py-4 pr-4 text-hacker-white placeholder-hacker-lightgray focus:outline-none focus:ring-2 focus:ring-matrix-green focus:border-transparent transition-all duration-200 pl-12;
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-hacker-darkgray rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-hacker-red to-accent-purple rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply from-accent-purple to-matrix-green;
+  }
+
+  /* Animation delays */
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+
+  /* Glass morphism */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-hacker-black/20 backdrop-blur-lg border border-hacker-white/10;
+  }
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Code block styling */
+pre {
+  @apply bg-gradient-to-br from-hacker-darkgray to-hacker-black rounded-xl p-6 overflow-x-auto scrollbar-thin border border-hacker-gray/30 shadow-lg;
+}
+
+code {
+  @apply font-mono text-sm text-matrix-light bg-hacker-gray/30 px-2 py-1 rounded-md;
+}
+
+pre code {
+  @apply bg-transparent px-0 py-0 text-hacker-white;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-hacker-red/30 text-hacker-white;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-matrix-green rounded-lg;
+}
+
+/* Loading animation */
+.loading {
+  @apply animate-pulse bg-gradient-to-r from-hacker-gray via-hacker-lightgray to-hacker-gray bg-[length:200%_100%];
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Backdrop blur for modals/overlays */
+.backdrop-blur-custom {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Modern input styling */
+.input-modern {
+  @apply bg-hacker-darkgray/50 border border-hacker-gray/50 rounded-lg px-4 py-3 text-hacker-white placeholder-hacker-lightgray focus:outline-none focus:ring-2 focus:ring-matrix-green focus:border-transparent transition-all duration-200;
+}
+
+/* Link styling */
+.link-modern {
+  @apply text-matrix-green hover:text-matrix-light transition-colors duration-200 underline decoration-matrix-green/30 hover:decoration-matrix-green;
+}
+
+/* Matrix Rain Effect - Subtle */
+.matrix-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  opacity: 0.03;
+}
+
+.matrix-rain::before {
+  content: "01010010011001010101001101000101";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(transparent, rgba(16, 185, 129, 0.1), transparent);
+  animation: matrix-fall 20s linear infinite;
   font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(16, 185, 129, 0.4);
+  white-space: pre;
+  line-height: 1.8;
+}
+
+@keyframes matrix-fall {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }
