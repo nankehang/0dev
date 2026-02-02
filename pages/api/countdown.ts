@@ -74,6 +74,11 @@ export default async function handler(
 
   if (req.method === 'PUT') {
     try {
+      const dbConnect = (await import('@/lib/mongodb')).default;
+      const CountdownSettings = (await import('@/models/CountdownSettings')).default;
+      
+      await dbConnect();
+      
       const { targetDate, title, subtitle, goals } = req.body;
 
       const settings = await CountdownSettings.findOneAndUpdate(
